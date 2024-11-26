@@ -6,7 +6,7 @@
 /*   By: spike <spike@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 22:22:39 by spike             #+#    #+#             */
-/*   Updated: 2024/11/23 12:55:19 by spike            ###   ########.fr       */
+/*   Updated: 2024/11/26 10:35:50 by hduflos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	handle_signal(int signal)
 {
 	if (signal == SIGUSR1)
-		ft_printf("Le message a bien ete recu dans son integralite cote client");
+		ft_printf("Le message a bien ete recu cote client");
 }
 
 int	compare_bits(char c, int i)
@@ -30,11 +30,11 @@ int	end_of_transmission(int serv_pid)
 	bits = 7;
 	while (bits >= 0)
 	{
-        if (kill(serv_pid, SIGUSR2) == -1)
-            return (-1);
-        usleep(500);
+		if (kill(serv_pid, SIGUSR2) == -1)
+			return (-1);
+		usleep(500);
 		bits--;
-    }
+	}
 	return (0);
 }
 
@@ -43,8 +43,8 @@ int	send_to_server(int serv_pid, char *str)
 	int	i;
 	int	bits;
 
-	i = 0;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
 		bits = 8;
 		while (--bits >= 0)
@@ -59,9 +59,8 @@ int	send_to_server(int serv_pid, char *str)
 				if (kill(serv_pid, SIGUSR2) == -1)
 					return (-1);
 			}
-			usleep(500); // pour ne pas surcharger le serv
+			usleep(500);
 		}
-		i++;
 	}
 	if (end_of_transmission(serv_pid) == -1)
 		return (-1);
@@ -71,8 +70,7 @@ int	send_to_server(int serv_pid, char *str)
 int	main(int ac, char **av)
 {
 	signal(SIGUSR1, handle_signal);
-
-	if (ac != 3 )
+	if (ac != 3)
 	{
 		ft_printf("Wrong nb of args");
 		return (1);

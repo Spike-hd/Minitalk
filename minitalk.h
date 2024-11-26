@@ -6,14 +6,14 @@
 /*   By: spike <spike@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:27:05 by spike             #+#    #+#             */
-/*   Updated: 2024/11/23 00:08:24 by spike            ###   ########.fr       */
+/*   Updated: 2024/11/26 10:41:30 by hduflos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
 # define MINITALK_H
 
-#include <unistd.h>
-#include <signal.h>
+# include <unistd.h>
+# include <signal.h>
 
 #endif
