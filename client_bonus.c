@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spike <spike@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 22:22:39 by spike             #+#    #+#             */
-/*   Updated: 2024/11/26 18:30:30 by spike            ###   ########.fr       */
+/*   Updated: 2024/11/26 19:59:12 by spike            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+int	g_run = 1;
+
+void	handle_signal(int signal)
+{
+	if (signal == SIGUSR1)
+		ft_printf("Le message a bien ete recu cote client");
+	g_run = 0;
+}
 
 int	compare_bits(char c, int i)
 {
@@ -63,6 +72,7 @@ int	send_to_server(int serv_pid, char *str)
 
 int	main(int ac, char **av)
 {
+	signal(SIGUSR1, handle_signal);
 	if (ac != 3)
 	{
 		ft_printf("Wrong nb of args");
@@ -72,6 +82,10 @@ int	main(int ac, char **av)
 	{
 		ft_printf("Erreur au niveau du pid");
 		return (1);
+	}
+	while (g_run)
+	{
+		pause();
 	}
 	return (0);
 }
